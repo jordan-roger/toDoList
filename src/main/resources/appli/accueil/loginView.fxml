@@ -8,35 +8,29 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="480.0" prefWidth="280.0" spacing="10.0"
+<VBox alignment="CENTER" prefHeight="361.0" prefWidth="260.0" spacing="20.0"
       xmlns="http://javafx.com/javafx/17"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="appli.accueil.InscriptionController">
+      fx:controller="appli.accueil.LoginController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
 
-    <Label text="Inscription">
-        <font><Font size="25.0" /></font>
+    <Label text="BIENVENUE !">
+        <font>
+            <Font size="25.0" />
+        </font>
     </Label>
 
-    <Label text="Nom :" />
-    <TextField fx:id="nomField" />
-
-    <Label text="Prénom :" />
-    <TextField fx:id="prenomField" />
-
-    <Label text="Email :" />
+    <Label text="Votre email :" />
     <TextField fx:id="emailField" />
 
-    <Label text="Mot de passe :" />
+    <Label text="Votre mot de passe :" />
     <PasswordField fx:id="passwordField" />
-
-    <Label text="Confirmation :" />
-    <PasswordField fx:id="confirmField" />
 
     <Label fx:id="labelErreur" text="" style="-fx-text-fill: red;" />
 
-    <Button onAction="#sInscrire" text="S'inscrire" />
-    <Button onAction="#retour" text="Retour" />
+    <Button onAction="#Connexio" text="Connexion" />
+    <Button text="Mot de passe oublié" />
+    <Button onAction="#Inscription" text="Inscription" />
 </VBox>
