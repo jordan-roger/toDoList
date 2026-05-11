@@ -30,7 +30,7 @@
 
     <Label fx:id="labelErreur" text="" style="-fx-text-fill: red;" />
 
-    <Button onAction="#Connexio" text="Connexion" />
+    <Button onAction="#Connexion" text="Connexion" />
     <Button text="Mot de passe oublié" />
     <Button onAction="#Inscription" text="Inscription" />
 </VBox>

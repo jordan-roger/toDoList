@@ -1,43 +1,54 @@
 package appli.accueil;
 
+import appli.StartApplication;
+import appli.model.Utilisateur;
+import appli.repository.UtilisateurRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import appli.StartApplication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class LoginController {
 
-    @FXML
-    private TextField emailField;
+    @FXML private TextField emailField;
+    @FXML private Label labelErreur;
+    @FXML private PasswordField passwordField;
+
+    private UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
 
     @FXML
-    private Label labelErreur;
-
-    @FXML
-    private PasswordField passwordField;
-
-    @FXML
-    void Connexio(ActionEvent event) {
+    void Connexion(ActionEvent event) {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        System.out.println("email: " + email);
-        System.out.println("password: " + password);
-
         if (email.isEmpty() || password.isEmpty()) {
             labelErreur.setText("Veuillez remplir tous les champs");
-        } else if (email.equals("ton@email.com") && password.equals("Azerty1234")) {
-            labelErreur.setText("Vous êtes connecté !");
+            return;
+        }
+
+        Utilisateur utilisateur = utilisateurRepository.getUtilisateurParEmail(email);
+
+        if (utilisateur == null) {
+            labelErreur.setText("Email ou mot de passe incorrect");
+            return;
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        if (encoder.matches(password, utilisateur.getMdp())) {
+            try {
+                StartApplication.changeScene("accueil/accueil");
+            } catch (Exception e) {
+                labelErreur.setText("Erreur lors de la redirection");
+            }
         } else {
             labelErreur.setText("Email ou mot de passe incorrect");
         }
-    }  // ← une seule accolade ici
+    }
 
     @FXML
     void Inscription(ActionEvent event) throws Exception {
         StartApplication.changeScene("accueil/Inscription");
     }
-
-}  // ← fermeture de la classe
+}

@@ -1,11 +1,14 @@
 package appli.accueil;
 
 import appli.StartApplication;
+import appli.model.Utilisateur;
+import appli.repository.UtilisateurRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class InscriptionController {
 
@@ -15,6 +18,8 @@ public class InscriptionController {
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmField;
     @FXML private Label labelErreur;
+
+    private UtilisateurRepository utilisateurRepository = new UtilisateurRepository();
 
     @FXML
     void sInscrire(ActionEvent event) {
@@ -26,17 +31,35 @@ public class InscriptionController {
 
         if (nom.isEmpty() || prenom.isEmpty() || email.isEmpty() || password.isEmpty() || confirm.isEmpty()) {
             labelErreur.setText("Veuillez remplir tous les champs");
-        } else if (!password.equals(confirm)) {
+            return;
+        }
+
+        if (!password.equals(confirm)) {
             labelErreur.setText("Les mots de passe ne correspondent pas");
-        } else {
-            System.out.println("Inscription réussie : " + nom + " " + prenom + " - " + email);
-            labelErreur.setStyle("-fx-text-fill: green;");
-            labelErreur.setText("Inscription réussie !");
+            return;
+        }
+
+        if (utilisateurRepository.getUtilisateurParEmail(email) != null) {
+            labelErreur.setText("Un compte existe déjà avec cet email");
+            return;
+        }
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String mdpHache = encoder.encode(password);
+
+        Utilisateur nouvelUtilisateur = new Utilisateur(nom, prenom, email, mdpHache, "user");
+        utilisateurRepository.ajouterUtilisateur(nouvelUtilisateur);
+
+        labelErreur.setText("Compte créé avec succès !");
+        try {
+            StartApplication.changeScene("accueil/login");
+        } catch (Exception e) {
+            labelErreur.setText("Erreur lors de la redirection");
         }
     }
 
     @FXML
-    void retour(ActionEvent event) throws Exception {
-        StartApplication.changeScene("accueil/Login");
+    void retourLogin(ActionEvent event) throws Exception {
+        StartApplication.changeScene("accueil/login");
     }
 }

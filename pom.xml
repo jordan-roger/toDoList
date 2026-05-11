@@ -33,6 +33,27 @@
             <version>9.2.0</version>
         </dependency>
 
+        <!-- BCrypt pour sécuriser les mots de passe -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-crypto</artifactId>
+            <version>6.2.1</version>
+        </dependency>
+
+        <!-- Nécessaire pour spring-security-crypto -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.9</version>
+        </dependency>
+
+        <!-- Commons Logging requis par Spring Security -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

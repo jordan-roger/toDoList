@@ -38,5 +38,5 @@
     <Label fx:id="labelErreur" text="" style="-fx-text-fill: red;" />
 
     <Button onAction="#sInscrire" text="S'inscrire" />
-    <Button onAction="#retour" text="Retour" />
+    <Button onAction="#retourLogin" text="Retour" />
 </VBox>
