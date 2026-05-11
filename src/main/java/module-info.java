@@ -5,6 +5,7 @@ module appli {
     requires mysql.connector.j;
     requires spring.security.crypto;
     requires org.slf4j;
+    requires commons.logging;
 
     opens appli to javafx.fxml;
     opens appli.accueil to javafx.fxml;
@@ -14,4 +15,5 @@ module appli {
     exports appli.model;
     exports appli.repository;
     exports appli.database;
+    exports appli.session;
 }

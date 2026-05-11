@@ -1,7 +1,7 @@
 package repository;
 
-import database.Database;
-import model.Utilisateur;
+import appli.database.Database;
+import appli.model.Utilisateur;
 
 import java.sql.*;
 import java.util.ArrayList;

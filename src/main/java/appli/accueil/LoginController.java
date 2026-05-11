@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import appli.session.SessionUtilisateur;
 
 public class LoginController {
 
@@ -37,10 +38,13 @@ public class LoginController {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (encoder.matches(password, utilisateur.getMdp())) {
+            SessionUtilisateur.getInstance().sauvegardeSession(utilisateur);
+            System.out.println("Connexion réussie pour : " + utilisateur.getNom());
             try {
                 StartApplication.changeScene("accueil/accueil");
             } catch (Exception e) {
-                labelErreur.setText("Erreur lors de la redirection");
+                e.printStackTrace();
+                labelErreur.setText("Erreur : " + e.getMessage());
             }
         } else {
             labelErreur.setText("Email ou mot de passe incorrect");
